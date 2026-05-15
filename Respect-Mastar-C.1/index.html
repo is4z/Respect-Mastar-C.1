@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Respect Mastar C.1</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: #05010d;
+      color: white;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      top: 0;
+      left: 0;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,0,20,.7), rgba(15,0,35,.75), #040009);
+      z-index: 1;
+    }
+
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 60px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 12px 20px;
+      border-radius: 999px;
+      backdrop-filter: blur(15px);
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: .3s;
+      font-size: 15px;
+    }
+
+    .menu a:hover {
+      background: rgba(168,85,247,.2);
+      color: #d8b4fe;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-box {
+      width: 55px;
+      height: 55px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#6d28d9,#c026d3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 0 30px rgba(168,85,247,.7);
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg,#6d28d9,#d946ef);
+      border: none;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      box-shadow: 0 0 30px rgba(168,85,247,.6);
+      transition: .3s;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .content {
+      position: relative;
+      z-index: 5;
+      height: calc(100vh - 110px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .content h1 {
+      font-size: 120px;
+      line-height: 1;
+      margin-bottom: 20px;
+      text-shadow: 0 0 40px rgba(255,255,255,.3);
+    }
+
+    .content p {
+      color: #ddd;
+      font-size: 22px;
+      line-height: 1.9;
+      margin-bottom: 35px;
+    }
+
+    .main-btn {
+      background: linear-gradient(135deg,#6d28d9,#d946ef);
+      color: white;
+      padding: 18px 45px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 0 40px rgba(168,85,247,.7);
+      transition: .3s;
+      display: inline-block;
+    }
+
+    .main-btn:hover {
+      transform: translateY(-4px);
+    }
+
+    .blur-light {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      background: rgba(139,92,246,.18);
+      filter: blur(120px);
+      border-radius: 50%;
+      bottom: -250px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+    
+
+    @media(max-width:900px){
+      nav {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .content h1 {
+        font-size: 70px;
+      }
+
+      .content p {
+        font-size: 18px;
+      }
+    }
+    .logo-img{
+  width:55px;
+  height:55px;
+  border-radius:18px;
+  object-fit:cover;
+  box-shadow:0 0 30px rgba(168,85,247,.7);
+}
+.bg-video{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+  align-items: center;
+  animation: fade 0.2s ease;
+}
+
+.modal-box {
+  width: 380px;
+  background: #0f0f0f;
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0,255,200,0.1);
+  animation: pop 0.25s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 26px;
+  color: #aaa;
+}
+
+.sub {
+  opacity: 0.7;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.login-card {
+  display: block;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.login-card.google {
+  background: linear-gradient(90deg, #db4437, #ff5c5c);
+}
+
+.login-card.discord {
+  background: linear-gradient(90deg, #5865F2, #7b83ff);
+}
+
+.login-card:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+@keyframes pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal {
+  z-index: 9999;
+}
+
+.modal-box {
+  position: relative;
+  z-index: 10000;
+}
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f0f;
+  color: white;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  background: #111;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* pages */
+.page {
+  display: none;
+  padding: 20px;
+}
+
+.page.active {
+  display: block;
+}
+
+/* shop */
+.shop-grid {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 12px;
+  width: 200px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f0f;
+  color: white;
+}
+
+/* الصفحات */
+.page {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: 0.4s ease;
+}
+
+/* الصفحة النشطة */
+.page.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  background: #111;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+/* المتجر */
+.shop-grid {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 12px;
+}
+img {
+  position: static !important;
+  max-width: 100%;
+}
+.rules-button{
+    padding:12px 30px;
+    border:none;
+    border-radius:10px;
+    background:#ffffff10;
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.rules-button:hover{
+    background:white;
+    color:black;
+}
+
+.rules-popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(8px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.rules-container{
+    width:900px;
+    max-width:95%;
+    height:85vh;
+    background:#0f0f0f;
+    border:1px solid #ffffff15;
+    border-radius:20px;
+    padding:40px;
+    position:relative;
+    overflow:hidden;
+    animation:showRules .3s ease;
+}
+
+.rules-content{
+    overflow-y:auto;
+    height:100%;
+    padding-right:10px;
+}
+
+.rules-content::-webkit-scrollbar{
+    width:6px;
+}
+
+.rules-content::-webkit-scrollbar-thumb{
+    background:white;
+    border-radius:10px;
+}
+
+.rules-container h1{
+    text-align:center;
+    margin-bottom:30px;
+    color:white;
+    font-size:40px;
+}
+
+.rules-container h2{
+    color:white;
+    margin-top:25px;
+    margin-bottom:10px;
+}
+
+.rules-container p{
+    color:#cfcfcf;
+    line-height:2;
+    background:#171717;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+.close-btn{
+    position:absolute;
+    top:20px;
+    right:25px;
+    color:white;
+    font-size:35px;
+    cursor:pointer;
+}
+
+@keyframes showRules{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+.page{
+    display:none;
+}
+
+#home{
+    display:block;
+}
+
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+
+    <video autoplay muted loop playsinline class="bg-video">
+  <source src="RecKLesS FT L.K - ريكلس - الحكمان اغنية ريسبكت.mp4" type="video/mp4">
+</video>
+
+    <div class="overlay"></div>
+    <div class="blur-light"></div>
+
+    <nav>
+      <button class="login-btn" onclick="openLogin()">
+ تسجيل الدخول
+</button>
+
+
+      <div class="menu">
+        <a href="#" onclick="showPage('home')">الرئيسية</a>
+  <a href="#" onclick="showPage('shop')">المتجر</a>
+        <a href="#">تقديم وظيفة</a>
+        <a href="#" onclick="showPage('rules')">القوانين</a>
+        <a href="#">الطاقم</a>
+        <a href="#">صناع المحتوى</a>
+      </div>
+
+      <div class="logo">
+        <img src="Respect Mastar C.1.png" class="logo-img">
+      </div>
+    </nav>
+
+    <div class="content">
+      <div>
+        <h1>ريسبكت ماستر</h1>
+
+        <p>
+          حياكم الله في سيرفر ريسبكت المتخصص في الرول بلاي،
+          <br>
+          انضم الآن وعيش أفضل تجربة RP عربية.
+        </p>
+
+        <a href="https://discord.gg/JsuXD7K5" class="login-btn">
+  دخول الدسكورد
+</a>
+      </div>
+    </div>
+
+  </section>
+  
+  
+  <div id="loginModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2>تسجيل الدخول</h2>
+      <span onclick="closeLogin()" class="close">&times;</span>
+    </div>
+
+    <a href="/auth/google" class="login-card google">
+      🔵 Google
+    </a>
+
+    <a href="/auth/discord" class="login-card discord">
+      🟣 Discord
+    </a>
+
+  </div>
+  
+
+</div>
+<script>
+function openLogin() {
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+function closeLogin() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
+window.onclick = function(e) {
+  let modal = document.getElementById("loginModal");
+  if (e.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+<div id="rules" class="page">
+
+  <h1>قوانين السيرفر</h1>
+
+  <div class="rules-content">
+
+    <h2>الميتا جيمنج</h2>
+    <p>يمنع استخدام معلومات خارج الرول بلاي.</p>
+
+    <h2>الباور جيمنج</h2>
+    <p>يمنع تنفيذ أفعال غير واقعية.</p>
+
+    <h2>RDM</h2>
+    <p>يمنع القتل العشوائي.</p>
+
+  </div>
+
+</div>
+
+<div id="home" class="page active">
+</div>
+
+<div id="shop" class="page">
+ 
+  <div class="shop-grid">
+    <div class="card">
+      <img src="car.jpg">
+      <h3>سيارة</h3>
+      <p>50 ريال</p>
+      <button>شراء</button>
+    </div>
+  </div>
+
+</div>
+<script>
+function showPage(pageId){
+
+    document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+    });
+
+    document.getElementById(pageId).style.display = 'block';
+}
+</script>
+<script>
+function showPage(pageId) {
+
+  let pages = document.querySelectorAll('.page');
+
+  pages.forEach(p => {
+    p.classList.remove('active');
+  });
+
+  document.getElementById(pageId).classList.add('active');
+}
+</script>
+
+
+
+</body>
+</html>
+برمجة u4.i ابو فهد و
